@@ -3,6 +3,7 @@ package org.zhire.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.zhire.service.ShortUrlService;
 
@@ -23,11 +24,16 @@ public class ShortUrlGetController {
     }
 
     @RequestMapping("/{value}")
-    public void get(@PathVariable String value, HttpServletResponse response, HttpServletRequest request) throws IOException {
+    public String get(@PathVariable String value, HttpServletResponse response, HttpServletRequest request) throws IOException {
         String key = request.getHeader("X-real-ip");
         log.info("请求IP：{}", key);
         log.info("请求路径：{}", request.getServletPath());
-        response.sendRedirect(shortUrlService.findFirstByRandomStr(value));
+        String url = shortUrlService.findFirstByRandomStr(value);
+        if (StringUtils.isEmpty(url) ){
+            return "404";
+        }
+        return "redirect:" + url;
+
     }
 
 
