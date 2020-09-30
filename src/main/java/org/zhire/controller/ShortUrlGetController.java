@@ -24,6 +24,9 @@ public class ShortUrlGetController {
 
     @RequestMapping("/{value}")
     public void get(@PathVariable String value, HttpServletResponse response, HttpServletRequest request) throws IOException {
+        String key = request.getHeader("X-real-ip");
+        log.info("请求IP：{}", key);
+        log.info("请求路径：{}", request.getServletPath());
         response.sendRedirect(shortUrlService.findFirstByRandomStr(value));
     }
 
