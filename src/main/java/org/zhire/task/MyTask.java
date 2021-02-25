@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.zhire.Interceptor.MyInterceptor;
+import org.zhire.service.WbPhoneService;
 
 /**
  * 定时任务，每天零点清除黑名单IP

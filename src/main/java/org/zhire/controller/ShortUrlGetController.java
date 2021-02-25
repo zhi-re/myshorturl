@@ -23,13 +23,16 @@ public class ShortUrlGetController {
         return "index";
     }
 
-    @RequestMapping("/{value}")
-    public String get(@PathVariable String value, HttpServletResponse response, HttpServletRequest request) throws IOException {
+    @RequestMapping("/{value}/{v2}")
+    public String get(@PathVariable String value,
+                      @PathVariable String v2,
+                      HttpServletResponse response, HttpServletRequest request) throws IOException {
         String key = request.getHeader("X-real-ip");
         log.info("请求IP：{}", key);
         log.info("请求路径：{}", request.getServletPath());
+        System.out.println(value + " " + v2);
         String url = shortUrlService.findFirstByRandomStr(value);
-        if (StringUtils.isEmpty(url) ){
+        if (StringUtils.isEmpty(url)) {
             return "404";
         }
         return "redirect:" + url;
